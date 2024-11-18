@@ -1,43 +1,103 @@
+<?php
+session_start();
+include 'koneksi.php';
+
+// Flash Message Handler
+if (isset($_SESSION['status'])) {
+    $message = $_SESSION['message'] ?? 'Aksi berhasil dilakukan!';
+    $icon = $_SESSION['status'] == 'success' ? 'success' : 'error';
+    echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Notifikasi',
+                text: '$message',
+                icon: '$icon',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>";
+    unset($_SESSION['status'], $_SESSION['message']);
+}
+
+// Fetch Data from Database
+$query = "SELECT * FROM siswa";
+$data = $koneksi->query($query);
+if (!$data) {
+    die("Query gagal: " . $koneksi->error);
+}
+?>
+
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>CRUD Pak Tedi</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body class="p-5">
-        <h1 class="mb-5">Tabel Siswa</h1>
-        <a href="./presensi.php">Tabel Presensi</a>
-        <a href="./siswa.php">Tabel Siswa</a>
-        <a href="./guru.php">Tabel Guru</a> <br>
-        <a class="btn btn-primary" href="./pages/tambah_siswa.php">Tambah data</a>
-        <table class="table table-striped table-bordered">
-            <tr>
-                <th>NISN</th>
-                <th>Nama</th>
-                <th>Kelas</th>
-                <th>Jurusan</th>
-                <th>Opsi</th>
-            </tr>
-            <?php 
-            include 'koneksi.php';
-            $data = mysqli_query($koneksi,"select * from siswa");
-            while($d = mysqli_fetch_array($data)){
-                ?>
-                <tr>
-                    <td><?php echo $d['nisn']; ?></td>
-                    <td><?php echo $d['nama_lengkap']; ?></td>
-                    <td><?php echo $d['kelas']; ?></td>
-                    <td><?php echo $d['jurusan']; ?></td>
-                    <td>
-                        <a href="./pages/edit_siswa.php?NISN=<?php echo $d['nisn']; ?>">Edit</a>
-                        <a href="./actions/hapus_siswa.php?NISN=<?php echo $d['nisn']; ?>">Hapus</a>
-                    </td>
-                </tr>
-                <?php 
-            }
-            ?>
-        </table>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    </body>
+<html lang="id">
+<head>
+    <title>CRUD Pak Tedi</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="p-5">
+    <h1 class="mb-4">Tabel Siswa</h1>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary mb-4">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link active" href="./siswa.php">Tabel Siswa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./presensi.php">Tabel Presensi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./guru.php">Tabel Guru</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <a class="btn btn-primary mb-3" href="./pages/tambah_siswa.php">Tambah data</a>
+    <div class="container">
+        <div class="row">
+            <?php while ($d = $data->fetch_assoc()) : ?>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">#<?= htmlspecialchars($d['nisn'], ENT_QUOTES, 'UTF-8'); ?></h5>
+                            <p class="card-text">Nama: <?= htmlspecialchars($d['nama_lengkap'], ENT_QUOTES, 'UTF-8'); ?></p>
+                            <p class="card-text">Kelas: <?= htmlspecialchars($d['kelas'], ENT_QUOTES, 'UTF-8'); ?></p>
+                            <p class="card-text">Jurusan: <?= htmlspecialchars($d['jurusan'], ENT_QUOTES, 'UTF-8'); ?></p>
+                            <a class="btn btn-success" href="./pages/edit_siswa.php?NISN=<?= urlencode($d['nisn']); ?>">Edit</a>
+                            <button class="btn btn-danger" onclick="confirmDelete('<?= htmlspecialchars($d['nisn'], ENT_QUOTES, 'UTF-8'); ?>')">Hapus</button>
+                            <a class="btn btn-secondary" href="./pages/tambah_presensi.php?NISN=<?= urlencode($d['nisn']); ?>">Catat Kehadiran</a>
+                        </div>
+                    </div>
+                </div>
+            <?php endwhile; ?>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmDelete(nisn) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: 'Data ini akan dihapus secara permanen!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Hapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = './actions/hapus_siswa.php?NISN=' + encodeURIComponent(nisn);
+                }
+            });
+        }
+    </script>
+</body>
 </html>

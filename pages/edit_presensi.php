@@ -3,6 +3,7 @@
 <head>
     <title>Edit</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body class="p-5">
     <h1 class="mb-5">Edit</h1>
@@ -18,7 +19,7 @@
             <table>
                 <tr>
                     <td>NISN</td>
-                    <td><input type="number" name="NISN" value="<?php echo $d['nisn']; ?>"></td>
+                    <td><input type="number" name="NISN" value="<?php echo $d['nisn']; ?>" readonly></td>
                 </tr>
                 <tr>
                     <td>Status</td>
@@ -26,11 +27,11 @@
                 </tr>
                 <tr>
                     <td>Waktu</td>
-                    <td><input type="time" name="Waktu" value="<?php echo $d['waktu']; ?>"></td>
+                    <td><input type="time" name="Waktu" value="<?php echo $d['waktu']; ?>" readonly></td>
                 </tr>
                 <tr>
                     <td>Tanggal</td>
-                    <td><input type="date" name="Tanggal" value="<?php echo $d['tanggal']; ?>"></td>
+                    <td><input type="date" name="Tanggal" value="<?php echo $d['tanggal']; ?>" readonly></td>
                 </tr>
                 <tr>
                     <td>Keterangan</td>

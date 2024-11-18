@@ -3,6 +3,7 @@
 <head>
     <title>Edit</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body class="p-5">
     <h1 class="mb-5">Edit</h1>
@@ -10,7 +11,7 @@
     
     <?php
 	include '../koneksi.php';
-	$nip = $_GET['NIP'];
+	$nip = $_GET['nip'];
 	$data = mysqli_query($koneksi,"select * from guru where nip='$nip'");
 	while($d = mysqli_fetch_array($data)){
 		?>
@@ -18,7 +19,7 @@
             <table>
                 <tr>
                     <td>NIP</td>
-                    <td><input type="number" name="nip" value="<?php echo $d['nip']; ?>"></td>
+                    <td><input type="number" name="nip" value="<?php echo $d['nip']; ?>" readonly></td>
                 </tr>
                 <tr>
                     <td>Nama</td>

@@ -1,14 +1,11 @@
 <?php
 include '../koneksi.php';
 
-$nisn = $_POST['NISN'];
-$status = $_POST['Status'];
-$waktu = $_POST['Waktu'];
-$tanggal = $_POST['Tanggal'];
-$keterangan = $_POST['Keterangan'];
+$nisn = $_POST['nisn'];
+$status_kehadiran = $_POST['status_kehadiran'];
+$keterangan = $_POST['keterangan'];
 
-mysqli_query($koneksi, "INSERT INTO presensi (nisn, status_kehadiran, waktu, keterangan) VALUES ('$nisn', '$status', '$tanggal', '$keterangan')");
+mysqli_query($koneksi, "INSERT INTO view_presensi (nisn, status_kehadiran, keterangan) VALUES ('$nisn', '$status_kehadiran', '$keterangan')");
 
-
-header("location:../presensi.php")
+header("Location: ../presensi.php?pesan=berhasil");
 ?>
