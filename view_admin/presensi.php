@@ -1,7 +1,34 @@
 <?php
 include '../koneksi.php';
-$query = "SELECT COUNT(*) as total FROM presensi";
-$result = $koneksi->query($query);
+
+// Ambil parameter pencarian jika ada
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+
+// Tangkap parameter sort dari URL
+$sortOrder = isset($_GET['sort']) && $_GET['sort'] === 'desc' ? 'DESC' : 'ASC';
+
+// Query pencarian dan pengurutan
+$query = "
+    SELECT * FROM view_presensi 
+    WHERE nama_lengkap LIKE ? 
+        OR nisn LIKE ? 
+        OR kelas LIKE ? 
+        OR status_kehadiran LIKE ?
+    ORDER BY id $sortOrder";
+
+$stmt = $koneksi->prepare($query);
+$searchParam = '%' . $search . '%';
+$stmt->bind_param('ssss', $searchParam, $searchParam, $searchParam, $searchParam);
+$stmt->execute();
+$data = $stmt->get_result();
+
+if (!$data) {
+    die("Query gagal: " . $koneksi->error);
+}
+
+// Hitung total data
+$queryTotal = "SELECT COUNT(*) as total FROM view_presensi";
+$result = $koneksi->query($queryTotal);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
@@ -52,6 +79,12 @@ if ($result->num_rows > 0) {
         </ul>
     </div>
 </nav>
+
+<form class="d-flex mb-3" method="GET" action="">
+        <input class="form-control me-2" type="text" name="search" placeholder="Cari berdasarkan nama, NISN, kelas" aria-label="Search" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+        <button class="btn btn-outline-primary" type="submit">Cari</button>
+    </form>
+    
 <div class="justify-content-end d-flex">
 <a class="btn btn-primary mb-3" href="../pages/tambah_presensicopy.php">Tambah data</a>
 <a href="?sort=asc" class="btn btn-outline-primary mb-3">Sort Id ASC</a>

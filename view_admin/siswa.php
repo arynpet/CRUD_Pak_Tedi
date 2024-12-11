@@ -1,7 +1,7 @@
 <?php
 session_start();
 include '../koneksi.php';
-
+$no = 1;
 // Flash Message Handler
 if (isset($_SESSION['status'])) {
     $message = $_SESSION['message'] ?? 'Aksi berhasil dilakukan!';
@@ -19,19 +19,24 @@ if (isset($_SESSION['status'])) {
     unset($_SESSION['status'], $_SESSION['message']);
 }
 
-// Fetch Data from Database
-$query = "SELECT * FROM siswa";
-$data = $koneksi->query($query);
+// Ambil parameter pencarian jika ada
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+
+// Modifikasi query untuk pencarian
+$query = "SELECT * FROM siswa WHERE nama_lengkap LIKE ? OR nisn LIKE ? OR kelas LIKE ?";
+$stmt = $koneksi->prepare($query);
+$searchParam = '%' . $search . '%';
+$stmt->bind_param('sss', $searchParam, $searchParam, $searchParam);
+$stmt->execute();
+$data = $stmt->get_result();
+
 if (!$data) {
     die("Query gagal: " . $koneksi->error);
 }
-?>
 
-<?php
-$no = 1;
-$query = "SELECT COUNT(*) as total FROM siswa";
-$result = $koneksi->query($query);
-
+// Menghitung total data
+$queryTotal = "SELECT COUNT(*) as total FROM siswa";
+$result = $koneksi->query($queryTotal);
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $jumlah_data = $row['total'];
@@ -77,6 +82,13 @@ if ($result->num_rows > 0) {
             </ul>
         </div>
     </nav>
+
+    <!-- Form Pencarian -->
+    <form class="d-flex mb-3" method="GET" action="">
+        <input class="form-control me-2" type="text" name="search" placeholder="Cari berdasarkan nama, NISN, kelas" aria-label="Search" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+        <button class="btn btn-outline-primary" type="submit">Cari</button>
+    </form>
+
     <div class= "justify-content-end d-flex">
         
     <a class="btn btn-primary mb-3" href="../pages/tambah_siswacopy.php">Tambah data</a>
