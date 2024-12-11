@@ -7,6 +7,6 @@ $nip = $_GET['nip'];
 mysqli_query($koneksi,"DELETE from guru where nip='$nip'");
  
 // mengalihkan halaman kembali ke index.php
-header("location:../guru.php");
+header("location:../view_admin/guru.php");
  
 ?>

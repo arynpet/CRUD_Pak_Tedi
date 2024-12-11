@@ -13,7 +13,7 @@ $result = mysqli_query($koneksi, $query);
 
 // Redirect kembali ke halaman presensi
 if ($result) {
-    header("Location: ../view_guru/presensi.php");
+    header("Location: ../view_admin/presensi.php");
     exit();
 } else {
     echo "Gagal menyimpan data!";

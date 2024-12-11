@@ -8,5 +8,5 @@ $jabatan = $_POST['jabatan'];
 mysqli_query($koneksi, "UPDATE guru set nama = '$nama', nip = '$nip', jabatan = '$jabatan' WHERE nip = '$nip'");
 
 
-header("location:../guru.php")
+header("location:../view_admin/guru.php")
 ?>

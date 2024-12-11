@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     $_SESSION['status'] = 'error';
     $_SESSION['message'] = 'Akses tidak valid.';
-    header("Location: ../view_guru/siswa.php");
+    header("Location: ../view_admin/siswa.php");
     exit();
 }
 ?>

@@ -8,5 +8,5 @@ $jabatan = $_POST['jabatan'];
 mysqli_query($koneksi, "INSERT INTO guru (nip, nama, jabatan) VALUES ('$nip', '$nama', '$jabatan')");
 
 
-header("location:../guru.php")
+header("location:../view_admin/guru.php")
 ?>
