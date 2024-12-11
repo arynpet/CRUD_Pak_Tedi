@@ -56,7 +56,7 @@
                 <input type="text" name="keterangan" id="keterangan" class="form-control" required minlength="3" placeholder="Tambah keterangan">
             </div>
             <div class="d-flex justify-content-between">
-                <a href="../presensi.php" class="btn btn-secondary">Kembali</a>
+                <a href="../view_guru/presensi.php" class="btn btn-secondary">Kembali</a>
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </div>
         </form>

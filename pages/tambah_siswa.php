@@ -52,7 +52,7 @@
 
             <!-- Tombol Aksi -->
             <div class="d-flex justify-content-between">
-                <a href="../siswa.php" class="btn btn-secondary">Kembali</a>
+                <a href="../view_guru/siswa.php" class="btn btn-secondary">Kembali</a>
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </div>
         </form>

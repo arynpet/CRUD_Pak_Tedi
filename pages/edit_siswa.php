@@ -38,7 +38,7 @@
             </div>
 
             <div class="d-flex justify-content-between">
-                <a class="btn btn-secondary" href="../siswa.php">Kembali</a>
+                <a class="btn btn-secondary" href="../view_guru/siswa.php">Kembali</a>
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </div>
         </form>

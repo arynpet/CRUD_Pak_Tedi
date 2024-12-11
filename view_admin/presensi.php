@@ -83,8 +83,8 @@ if ($result->num_rows > 0) {
                         <p class="card-text">Waktu: <?php echo $d['waktu']; ?> </p>
                         <p class="card-text">Tanggal: <?php echo $d['tanggal']; ?> </p>
                         <p class="card-text">Keterangan: <?php echo $d['keterangan']; ?> </p>
-                        <a class="btn btn-success" href="./pages/edit_presensicopy.php?id=<?php echo $d['id']; ?>">Edit</a>
-                        <a class="btn btn-danger" href="./actions/hapus_presensicopy.php?id=<?php echo $d['id']; ?>">Hapus</a>
+                        <a class="btn btn-success" href="../pages/edit_presensicopy.php?id=<?php echo $d['id']; ?>">Edit</a>
+                        <a class="btn btn-danger" href="../actions/hapus_presensicopy.php?id=<?php echo $d['id']; ?>">Hapus</a>
                     </div>
                 </div>
             </div>

@@ -28,6 +28,7 @@ if (!$data) {
 ?>
 
 <?php
+$no = 1;
 $query = "SELECT COUNT(*) as total FROM siswa";
 $result = $koneksi->query($query);
 
@@ -87,7 +88,8 @@ if ($result->num_rows > 0) {
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h5 class="card-title">#<?= htmlspecialchars($d['nisn'], ENT_QUOTES, 'UTF-8'); ?></h5>
+                            <h5 class="card-title"><?php echo $no++; ?></h5>
+                            <p class="card-text">Nisn: <?= htmlspecialchars($d['nisn'], ENT_QUOTES, 'UTF-8'); ?></p>
                             <p class="card-text">Nama: <?= htmlspecialchars($d['nama_lengkap'], ENT_QUOTES, 'UTF-8'); ?></p>
                             <p class="card-text">Kelas: <?= htmlspecialchars($d['kelas'], ENT_QUOTES, 'UTF-8'); ?></p>
                             <p class="card-text">Jurusan: <?= htmlspecialchars($d['jurusan'], ENT_QUOTES, 'UTF-8'); ?></p>
@@ -113,7 +115,7 @@ if ($result->num_rows > 0) {
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = '../actions/hapus_siswa.php?NISN=' + encodeURIComponent(nisn);
+                    window.location.href = '../actions/hapus_siswacopy.php?NISN=' + encodeURIComponent(nisn);
                 }
             });
         }

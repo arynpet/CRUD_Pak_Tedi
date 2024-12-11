@@ -36,7 +36,7 @@
                 <input type="text" name="Keterangan" id="Keterangan" class="form-control" value="<?php echo $d['keterangan']; ?>">
             </div>
             <div class="d-flex justify-content-between">
-                <a href="../view_guru/presensi.php" class="btn btn-secondary">Kembali</a>
+                <a href="../view_admin/presensi.php" class="btn btn-secondary">Kembali</a>
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </div>
         </form>

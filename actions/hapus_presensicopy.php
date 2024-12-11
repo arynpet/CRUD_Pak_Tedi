@@ -7,6 +7,6 @@ $id = $_GET['id'];
 mysqli_query($koneksi,"DELETE from presensi where id='$id'");
  
 // mengalihkan halaman kembali ke index.php
-header("location:../view_guru/presensi.php");
+header("location:../view_admin/presensi.php");
  
 ?>

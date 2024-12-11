@@ -43,6 +43,6 @@ if (isset($_GET['NISN']) && !empty($_GET['NISN'])) {
 $koneksi->close();
 
 // Redirect kembali ke halaman siswa
-header("Location: ../view_guru/siswa.php");
+header("Location: ../view_admin/siswa.php");
 exit();
 ?>
